@@ -4,8 +4,6 @@ import android.app.Service;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
-import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,20 +81,22 @@ public class AdapterBikeStations extends android.widget.BaseAdapter{
                     JSONObject obj = jsonArray.getJSONObject(i);
 
                     bikeStations.add(new BikeStation(
-                            obj.getJSONObject("properties").getInt("number"),
                             obj.getJSONObject("properties").getString("name"),
-                            obj.getJSONObject("properties").getInt("available")));
+                            obj.getJSONObject("properties").getInt("number"),
+                            obj.getJSONObject("properties").getString("address"),
+                            obj.getJSONObject("properties").getInt("total"),
+                            obj.getJSONObject("properties").getInt("available"),
+                            obj.getJSONObject("properties").getInt("free"),
+                            obj.getJSONObject("geometry").getJSONArray("coordinates").getDouble(0),
+                            obj.getJSONObject("geometry").getJSONArray("coordinates").getDouble(0)));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         }
         int z;
-        for (z = 0; z < this.getCount(); z++)
-        {
-            System.out.println(bikeStations.get(z).getName());
-        }
     }
+
 
     @Override
     public int getCount() {
@@ -104,7 +104,7 @@ public class AdapterBikeStations extends android.widget.BaseAdapter{
     }
 
     @Override
-    public Object getItem(int position){
+    public BikeStation getItem(int position){
         return bikeStations.get(position);
     }
 

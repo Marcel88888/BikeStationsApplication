@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ValenbisiApp="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/new_report"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="new"
+        ValenbisiApp:showAsAction="always"/>
+    <item android:id="@+id/location"
+        android:icon="@android:drawable/ic_menu_mylocation"
+        android:title="new"
+        ValenbisiApp:showAsAction="always"/>
+</menu>

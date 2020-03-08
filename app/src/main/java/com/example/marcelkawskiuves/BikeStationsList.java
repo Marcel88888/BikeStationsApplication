@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.os.Bundle;
 
@@ -24,9 +23,8 @@ public class BikeStationsList extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent act2 = new Intent(BikeStationsList.this, BikeStationDetails.class);
-                Object o = stationsList.getItemAtPosition(position);
-                act2.putExtra("chosenBikeStation", o);
-                act2.p
+                act2.putExtra("bikeStationId", position);
+                startActivity(act2);
             }
         });
         stationsList.setAdapter((new AdapterBikeStations(this)));
