@@ -17,5 +17,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".BikeStationDetails"/>
+        <activity android:name=".BikeStationReport"/>
     </application>
 </manifest>

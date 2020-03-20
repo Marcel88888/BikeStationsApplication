@@ -3,4 +3,15 @@
     <string name="station_name">station name</string>
     <string name="available_bikes">available bikes</string>
     <string name="station_number">station number</string>
+    <string-array name="report_statuses">
+        <item>Open</item>
+        <item>Processing</item>
+        <item>Closed</item>
+    </string-array>
+    <string-array name="report_types">
+        <item>Electric</item>
+        <item>Masonry</item>
+        <item>Mechanical</item>
+        <item>Painting</item>
+    </string-array>
 </resources>

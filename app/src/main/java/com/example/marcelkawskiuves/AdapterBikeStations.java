@@ -26,6 +26,7 @@ import org.json.JSONObject;
 public class AdapterBikeStations extends android.widget.BaseAdapter{
 
     private ArrayList<BikeStation> bikeStations;
+    private DBHelper dbHelper;
     Context context;
 
     static class ViewHolder {
@@ -36,6 +37,7 @@ public class AdapterBikeStations extends android.widget.BaseAdapter{
 
     public AdapterBikeStations(Context c) {
         this.context = c;
+        dbHelper = new DBHelper(c);
         Init();
     }
 
@@ -94,7 +96,6 @@ public class AdapterBikeStations extends android.widget.BaseAdapter{
                 }
             }
         }
-        int z;
     }
 
 

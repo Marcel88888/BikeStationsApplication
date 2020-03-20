@@ -2,12 +2,14 @@ package com.example.marcelkawskiuves;
 
 import android.os.Bundle;
 import android.content.Intent;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.TextView;
+import android.widget.ListView;
 import android.view.MenuInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.net.Uri;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 
@@ -22,6 +24,8 @@ public class BikeStationDetails extends AppCompatActivity {
     private TextView available;
     private TextView free;
     private TextView coordinates;
+    private ListView reportsListView;
+    private static DBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +33,7 @@ public class BikeStationDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bikestationdetails);
 
+        dbHelper = new DBHelper(this);
         intent = getIntent();
         stationId = intent.getIntExtra("bikeStationId", -1);
         bikeStation = new AdapterBikeStations(this).getItem(stationId);
@@ -40,6 +45,8 @@ public class BikeStationDetails extends AppCompatActivity {
         free = findViewById(R.id.freeTV);
         coordinates = findViewById(R.id.coordinatesTV);
 
+        reportsListView = findViewById(R.id.reportsLV);
+
         setTitle(bikeStation.getName());
         number.setText(String.valueOf(bikeStation.getNumber()));
         address.setText(bikeStation.getAddress());
@@ -48,6 +55,18 @@ public class BikeStationDetails extends AppCompatActivity {
         free.setText(String.valueOf(bikeStation.getFree()));
         String strCoordinate = bikeStation.getCoordinate1() + ", " + bikeStation.getCoordinate2();
         coordinates.setText(strCoordinate);
+
+        reportsListView.setAdapter(new CAdapter(this, dbHelper.findReportByBikeStation(stationId), 0));
+
+        reportsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(BikeStationDetails.this, BikeStationReport.class);
+                intent.putExtra("stationId", bikeStation.getNumber());
+                intent.putExtra("id", Integer.parseInt(((TextView) view.findViewById(R.id.reportId)).getText().toString()));
+                startActivityForResult(intent, 1);
+            }
+        });
     }
 
     @Override
@@ -61,9 +80,12 @@ public class BikeStationDetails extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.new_report:
+                Intent intent = new Intent(BikeStationDetails.this, BikeStationReport.class);
+                intent.putExtra("stationId", bikeStation.getNumber());
+                intent.putExtra("id", -1);
+                startActivityForResult(intent, 1);
                 return true;
             case R.id.location:
-                System.out.println("dqwfcaaesfced");
                 showOnMap();
                 return true;
             default:
@@ -84,6 +106,14 @@ public class BikeStationDetails extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            reportsListView.setAdapter(new CAdapter(this, dbHelper.findReportByBikeStation(stationId), 0));
+        }
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -91,4 +121,7 @@ public class BikeStationDetails extends AppCompatActivity {
         finish();
     }
 
+    public static DBHelper getDbHelper() {
+        return dbHelper;
+    }
 }

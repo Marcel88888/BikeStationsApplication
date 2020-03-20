@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BikeStationReport">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:text="Title"
+        android:textColor="@android:color/black" />
+
+    <EditText
+        android:id="@+id/titleET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/title"
+        android:layout_marginEnd="18dp"
+        android:layout_marginStart="18dp"
+        android:ems="10"
+        android:hint="Title"
+        android:inputType="textPersonName"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/titleET"
+        android:layout_marginStart="15dp"
+        android:text="Description"
+        android:textColor="@android:color/black" />
+
+    <EditText
+        android:id="@+id/descriptionET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/description"
+        android:layout_marginEnd="18dp"
+        android:layout_marginStart="18dp"
+        android:ems="10"
+        android:gravity="top|start"
+        android:hint="Description"
+        android:inputType="textMultiLine"
+        android:lines="8"
+        android:minLines="8"
+        android:scrollbars="vertical"
+        android:textAlignment="gravity"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/descriptionET"
+        android:layout_marginStart="15dp"
+        android:text="Status"
+        android:textColor="@android:color/black" />
+
+    <Spinner
+        android:id="@+id/statusSp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentStart="false"
+        android:layout_below="@id/status"
+        android:layout_marginEnd="18dp"
+        android:layout_marginStart="18dp" />
+
+    <TextView
+        android:id="@+id/type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="false"
+        android:layout_below="@id/statusSp"
+        android:layout_marginStart="15dp"
+        android:text="Type"
+        android:textColor="@android:color/black" />
+
+    <Spinner
+        android:id="@+id/typeSp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentStart="false"
+        android:layout_below="@+id/type"
+        android:layout_marginEnd="18dp"
+        android:layout_marginStart="18dp" />
+
+</RelativeLayout>

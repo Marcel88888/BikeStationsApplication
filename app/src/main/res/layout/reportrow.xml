@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/reportDot"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        app:srcCompat="@drawable/green_dot" />
+
+    <TextView
+        android:id="@+id/reportTitle"
+        android:layout_width="350dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/reportDot"
+        android:textSize="18dp"
+        android:text="Title" />
+
+    <TextView
+        android:id="@+id/reportId"
+        android:layout_width="5dp"
+        android:layout_height="5dp"
+        android:visibility="invisible" />
+
+</RelativeLayout>

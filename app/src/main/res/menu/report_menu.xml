@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ValenbisiApp="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/new_report"
-        android:icon="@android:drawable/ic_menu_add"
-        android:title="new_report"
+    <item android:id="@+id/save_report"
+        android:icon="@drawable/ic_cab_done_holo_light"
+        android:title="save_report"
         ValenbisiApp:showAsAction="always"/>
-    <item android:id="@+id/location"
-        android:icon="@android:drawable/ic_menu_mylocation"
-        android:title="location"
+    <item android:id="@+id/delete_report"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:title="delete_report"
         ValenbisiApp:showAsAction="always"/>
 </menu>
