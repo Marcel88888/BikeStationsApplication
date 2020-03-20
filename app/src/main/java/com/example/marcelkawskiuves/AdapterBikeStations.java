@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ public class AdapterBikeStations extends android.widget.BaseAdapter{
         TextView number;
         TextView name;
         TextView available;
+        ImageView bike;
     }
 
     public AdapterBikeStations(Context c) {
@@ -127,6 +129,7 @@ public class AdapterBikeStations extends android.widget.BaseAdapter{
             holder.number = v.findViewById(R.id.bikestationviewnumber);
             holder.name = v.findViewById(R.id.bikestationviewname);
             holder.available = v.findViewById(R.id.bikestationviewavailable);
+            holder.bike = v.findViewById(R.id.bike);
             v.setTag(holder);
         } else {
             holder = (ViewHolder)v.getTag();
