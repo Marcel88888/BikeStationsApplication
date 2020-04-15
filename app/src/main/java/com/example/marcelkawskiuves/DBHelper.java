@@ -49,7 +49,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void insertReport(Integer stationId, String name, String description, String status, String type) {
         contentValues = new ContentValues();
 
-        contentValues.put(DBHelper.STATION_ID, stationId-1);
+        contentValues.put(DBHelper.STATION_ID, stationId);
         contentValues.put(DBHelper.REPORT_NAME, name);
         contentValues.put(DBHelper.REPORT_DESCRIPTION, description);
         contentValues.put(DBHelper.REPORT_STATUS, status);
@@ -61,7 +61,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void updateReport(Integer stationId, Integer reportId, String name, String description, String status, String type) {
         contentValues = new ContentValues();
 
-        contentValues.put(DBHelper.STATION_ID, stationId-1);
+        contentValues.put(DBHelper.STATION_ID, stationId);
         contentValues.put(DBHelper.REPORT_NAME, name);
         contentValues.put(DBHelper.REPORT_DESCRIPTION, description);
         contentValues.put(DBHelper.REPORT_STATUS, status);

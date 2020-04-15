@@ -9,25 +9,17 @@ import android.widget.TextView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
-import java.io.Writer;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Collections;
+import java.util.concurrent.ExecutionException;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class AdapterBikeStations extends android.widget.BaseAdapter{
 
     private ArrayList<BikeStation> bikeStations;
     private DBHelper dbHelper;
+    private DataCollector dataCollector;
     Context context;
 
     static class ViewHolder {
@@ -38,65 +30,23 @@ public class AdapterBikeStations extends android.widget.BaseAdapter{
     }
 
     public AdapterBikeStations(Context c) {
+
         this.context = c;
         dbHelper = new DBHelper(c);
+        dataCollector = new DataCollector();
         Init();
     }
 
     public void Init() {
 
-        bikeStations = new ArrayList<BikeStation>();
-
-        InputStream is = context.getResources().openRawResource(R.raw.bikestationsvalenbici);
-        Writer writer = new StringWriter();
-        char[] buffer = new char[1024];
         try {
-            Reader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
-            int n;
-            while ((n = reader.read(buffer)) != -1) {
-                writer.write(buffer, 0, n);
-            }
-        } catch (UnsupportedEncodingException e) {
+            bikeStations = dataCollector.execute().get();
+            //Collections.sort(bikeStations, new StationsComparator());
+            // TODO sortowanie
+        } catch (InterruptedException e) {
             e.printStackTrace();
-        } catch (IOException e) {
+        } catch (ExecutionException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        String jsonString = writer.toString();
-        JSONObject jsonObject;
-        JSONArray jsonArray = null;
-
-        try {
-            jsonObject = new JSONObject(jsonString);
-            jsonArray = new JSONArray(jsonObject.get("features").toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        if (jsonArray != null) {
-            for (int i = 0; i < jsonArray.length(); i++) {
-                try {
-                    JSONObject obj = jsonArray.getJSONObject(i);
-
-                    bikeStations.add(new BikeStation(
-                            obj.getJSONObject("properties").getString("name"),
-                            obj.getJSONObject("properties").getInt("number"),
-                            obj.getJSONObject("properties").getString("address"),
-                            obj.getJSONObject("properties").getInt("total"),
-                            obj.getJSONObject("properties").getInt("available"),
-                            obj.getJSONObject("properties").getInt("free"),
-                            obj.getJSONObject("geometry").getJSONArray("coordinates").getDouble(0),
-                            obj.getJSONObject("geometry").getJSONArray("coordinates").getDouble(0)));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
         }
     }
 
@@ -107,8 +57,12 @@ public class AdapterBikeStations extends android.widget.BaseAdapter{
     }
 
     @Override
-    public BikeStation getItem(int position){
-        return bikeStations.get(position);
+    public BikeStation getItem(int number){
+        for (BikeStation bikeStation: bikeStations) {
+            if (bikeStation.getNumber() == number)
+                return bikeStation;
+        }
+        return null;
     }
 
     @Override
@@ -119,7 +73,7 @@ public class AdapterBikeStations extends android.widget.BaseAdapter{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = convertView;
-        ViewHolder holder = null;
+        ViewHolder holder;
         if (v == null) {
             LayoutInflater li =
                     (LayoutInflater)context.getSystemService(Service.LAYOUT_INFLATER_SERVICE);
@@ -135,8 +89,9 @@ public class AdapterBikeStations extends android.widget.BaseAdapter{
             holder = (ViewHolder)v.getTag();
         }
 
-        if (bikeStations.get(position).getAvailable() > 10)
+        if (bikeStations.get(position).getAvailable() > 10) {
             v.setBackgroundColor(Color.GREEN);
+        }
         else if (bikeStations.get(position).getAvailable() > 4)
             v.setBackgroundColor(Color.YELLOW);
         else v.setBackgroundColor(Color.RED);
@@ -147,4 +102,20 @@ public class AdapterBikeStations extends android.widget.BaseAdapter{
 
         return v;
     }
+
+    class StationsComparator implements Comparator<BikeStation> {
+
+        @Override
+        public int compare(BikeStation s1, BikeStation s2) {
+            int n1 = s1.getNumber();
+            int n2 = s2.getNumber();
+            if (n1 > n2) {
+                return 1;
+            } else if (n2 > n1) {
+                return -1;
+            }
+            return 0;
+        }
+    }
+
 }

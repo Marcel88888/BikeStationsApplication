@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.os.Bundle;
+import android.widget.TextView;
 
 
 public class BikeStationsList extends Activity {
@@ -23,7 +24,7 @@ public class BikeStationsList extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent act2 = new Intent(BikeStationsList.this, BikeStationDetails.class);
-                act2.putExtra("bikeStationId", position);
+                act2.putExtra("bikeStationId", Integer.parseInt(((TextView) view.findViewById(R.id.bikestationviewnumber)).getText().toString()));
                 startActivity(act2);
             }
         });

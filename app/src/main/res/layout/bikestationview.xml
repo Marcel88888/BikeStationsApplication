@@ -10,11 +10,11 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="0dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="0dp"
-        android:layout_marginEnd="0dp"
+        android:layout_marginEnd="5dp"
         android:text="@string/station_name"
-        android:textSize="18sp" />
+        android:textSize="18sp"/>
 
     <TextView
         android:id="@+id/bikestationviewavailable"
@@ -28,13 +28,22 @@
         android:text="avail" />
 
     <TextView
+        android:id="@+id/numTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bikestationviewname"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="8dp"
+        android:text="#" />
+
+    <TextView
         android:id="@+id/bikestationviewnumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/bikestationviewname"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="1dp"
         android:layout_marginTop="0dp"
+        android:layout_toEndOf="@+id/numTitle"
         android:text="stat_num" />
 
     <ImageView
@@ -44,7 +53,7 @@
         android:layout_below="@+id/bikestationviewname"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="0dp"
-        android:layout_marginEnd="6dp"
+        android:layout_marginEnd="5dp"
         android:src="@drawable/icons8_march_50" />
 
 </RelativeLayout>
