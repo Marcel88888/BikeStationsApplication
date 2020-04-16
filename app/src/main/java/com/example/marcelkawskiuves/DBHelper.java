@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteStatement;
 
 public class DBHelper extends SQLiteOpenHelper {
 
@@ -44,6 +45,12 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("drop table if exists " + TABLE_NAME);
         onCreate(db);
+    }
+
+    public int countReports(int bikeStationId) {
+        SQLiteStatement sqLiteStatement = dataBase.compileStatement("select count(*) from " +
+                TABLE_NAME + " where " + STATION_ID + " == " + bikeStationId);
+        return (int)sqLiteStatement.simpleQueryForLong();
     }
 
     public void insertReport(Integer stationId, String name, String description, String status, String type) {

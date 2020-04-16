@@ -1,5 +1,7 @@
 package com.example.marcelkawskiuves;
 
+import android.location.Location;
+
 import java.io.Serializable;
 
 public class BikeStation implements Serializable {
@@ -10,8 +12,10 @@ public class BikeStation implements Serializable {
     private int total;
     private int available;
     private int free;
+    private int reports = 0;
     private double coordinate1;
     private double coordinate2;
+    private double distance = Double.MAX_VALUE;
 
 
     public BikeStation(String name, int number, String address, int total, int available, int free, double coordinate1, double coordinate2){
@@ -88,5 +92,19 @@ public class BikeStation implements Serializable {
 
     public double getCoordinate2() {
         return coordinate2;
+    }
+
+    public double getDistance() { return distance; }
+
+
+    // TODO LOKALIZACJA POBIERANA Z GPS
+    public void calculateDistance() {
+        Location ETSELocation = new Location("ETSELocation");
+        ETSELocation.setLatitude(39.512634);
+        ETSELocation.setLongitude(-0.424035);
+        Location bikeStationLocation = new Location("bikeStationLocation");
+        bikeStationLocation.setLatitude(this.getCoordinate1());
+        bikeStationLocation.setLongitude(this.getCoordinate2());
+        this.distance = bikeStationLocation.distanceTo(ETSELocation);
     }
 }

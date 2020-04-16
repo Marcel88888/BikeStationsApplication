@@ -25,24 +25,26 @@ public class AdapterBikeStations extends android.widget.BaseAdapter{
     static class ViewHolder {
         TextView number;
         TextView name;
+        TextView distance;
+        TextView reports;
         TextView available;
-        ImageView bike;
     }
 
     public AdapterBikeStations(Context c) {
 
         this.context = c;
-        dbHelper = new DBHelper(c);
-        dataCollector = new DataCollector();
+        this.dbHelper = new DBHelper(c);
+        this.dataCollector = new DataCollector();
         Init();
+        for (int i=0; i<bikeStations.size();i++)
+            System.out.println(bikeStations.get(i).getNumber());
     }
 
     public void Init() {
 
         try {
             bikeStations = dataCollector.execute().get();
-            //Collections.sort(bikeStations, new StationsComparator());
-            // TODO sortowanie
+            Collections.sort(bikeStations, new StationsComparator());
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -82,8 +84,9 @@ public class AdapterBikeStations extends android.widget.BaseAdapter{
 
             holder.number = v.findViewById(R.id.bikestationviewnumber);
             holder.name = v.findViewById(R.id.bikestationviewname);
+            holder.distance = v.findViewById(R.id.bikestationviewdistance);
+            holder.reports = v.findViewById(R.id.bikestationviewreports);
             holder.available = v.findViewById(R.id.bikestationviewavailable);
-            holder.bike = v.findViewById(R.id.bike);
             v.setTag(holder);
         } else {
             holder = (ViewHolder)v.getTag();
@@ -98,6 +101,8 @@ public class AdapterBikeStations extends android.widget.BaseAdapter{
 
         holder.number.setText(String.valueOf(bikeStations.get(position).getNumber()));
         holder.name.setText(bikeStations.get(position).getName());
+        holder.distance.setText(String.valueOf(bikeStations.get(position).getDistance()));
+        holder.reports.setText(String.valueOf(dbHelper.countReports(bikeStations.get(position).getNumber())));
         holder.available.setText(String.valueOf(bikeStations.get(position).getAvailable()));
 
         return v;
@@ -106,12 +111,14 @@ public class AdapterBikeStations extends android.widget.BaseAdapter{
     class StationsComparator implements Comparator<BikeStation> {
 
         @Override
-        public int compare(BikeStation s1, BikeStation s2) {
-            int n1 = s1.getNumber();
-            int n2 = s2.getNumber();
-            if (n1 > n2) {
+        public int compare(BikeStation bs1, BikeStation bs2) {
+            bs1.calculateDistance();
+            bs2.calculateDistance();
+            double distance1 = bs1.getDistance();
+            double distance2 = bs2.getDistance();
+            if (distance1 < distance2) {
                 return 1;
-            } else if (n2 > n1) {
+            } else if (distance1 > distance2) {
                 return -1;
             }
             return 0;

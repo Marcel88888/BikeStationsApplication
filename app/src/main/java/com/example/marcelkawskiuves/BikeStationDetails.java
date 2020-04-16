@@ -27,6 +27,10 @@ public class BikeStationDetails extends AppCompatActivity {
     private ListView reportsListView;
     private static DBHelper dbHelper;
 
+    public static DBHelper getDbHelper() {
+        return dbHelper;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -119,9 +123,5 @@ public class BikeStationDetails extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finish();
-    }
-
-    public static DBHelper getDbHelper() {
-        return dbHelper;
     }
 }

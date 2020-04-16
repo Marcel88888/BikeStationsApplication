@@ -17,9 +17,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import uk.me.jstott.jcoord.UTMRef;
 
-// TODO LICZBA ZGLOSZEN NA LISTVIEW
+// TODO POPRAWIC ODLEGLOSC NA LISTVIEW
 // TODO DODATKOWE IMPLEMENTACJE (W TYM SORTOWANIE)
+// TODO LISTVIEW UCINA OSTATNIE PRZYSTANKI
 
 
 public class DataCollector extends AsyncTask<String, Void, ArrayList>{
@@ -72,8 +74,16 @@ public class DataCollector extends AsyncTask<String, Void, ArrayList>{
             for (int i = 0; i < jsonArray.length(); i++) {
                 try {
                     JSONObject obj = jsonArray.getJSONObject(i);
+
                     String name = obj.getJSONObject("properties").getString("name");
                     name = name.substring(name.indexOf("_")+1).replaceAll("_", " ");
+
+                    double coordinate1 = obj.getJSONObject("geometry").getJSONArray("coordinates").getDouble(0);
+                    double coordinate2 = obj.getJSONObject("geometry").getJSONArray("coordinates").getDouble(0);
+                    UTMRef utm = new UTMRef(coordinate1, coordinate2, 'N', 30);
+                    coordinate1 = utm.toLatLng().getLat();
+                    coordinate2 = utm.toLatLng().getLng();
+
                     bikeStations.add(new BikeStation(
                             name,
                             obj.getJSONObject("properties").getInt("number"),
@@ -81,8 +91,8 @@ public class DataCollector extends AsyncTask<String, Void, ArrayList>{
                             obj.getJSONObject("properties").getInt("total"),
                             obj.getJSONObject("properties").getInt("available"),
                             obj.getJSONObject("properties").getInt("free"),
-                            obj.getJSONObject("geometry").getJSONArray("coordinates").getDouble(0),
-                            obj.getJSONObject("geometry").getJSONArray("coordinates").getDouble(0)));
+                            coordinate1,
+                            coordinate2));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

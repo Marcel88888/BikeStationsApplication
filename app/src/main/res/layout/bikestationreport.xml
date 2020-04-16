@@ -68,13 +68,13 @@
 
     <Spinner
         android:id="@+id/statusSp"
-        android:layout_width="match_parent"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="false"
-        android:layout_alignParentStart="false"
         android:layout_below="@id/status"
-        android:layout_marginEnd="18dp"
-        android:layout_marginStart="18dp" />
+        android:layout_alignParentStart="false"
+        android:layout_alignParentBottom="false"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="18dp" />
 
     <TextView
         android:id="@+id/type"
@@ -88,7 +88,7 @@
 
     <Spinner
         android:id="@+id/typeSp"
-        android:layout_width="match_parent"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="false"
         android:layout_alignParentStart="false"

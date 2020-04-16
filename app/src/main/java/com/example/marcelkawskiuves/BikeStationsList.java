@@ -30,4 +30,10 @@ public class BikeStationsList extends Activity {
         });
         stationsList.setAdapter((new AdapterBikeStations(this)));
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        stationsList.setAdapter(new AdapterBikeStations(this));
+    }
 }
