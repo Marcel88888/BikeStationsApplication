@@ -24,6 +24,7 @@ public class BikeStationDetails extends AppCompatActivity {
     private TextView available;
     private TextView free;
     private TextView coordinates;
+    private TextView distance;
     private ListView reportsListView;
     private static DBHelper dbHelper;
 
@@ -48,6 +49,7 @@ public class BikeStationDetails extends AppCompatActivity {
         available = findViewById(R.id.availableTV);
         free = findViewById(R.id.freeTV);
         coordinates = findViewById(R.id.coordinatesTV);
+        distance = findViewById(R.id.distanceTV);
 
         reportsListView = findViewById(R.id.reportsLV);
 
@@ -59,6 +61,7 @@ public class BikeStationDetails extends AppCompatActivity {
         free.setText(String.valueOf(bikeStation.getFree()));
         String strCoordinate = bikeStation.getCoordinate1() + ", " + bikeStation.getCoordinate2();
         coordinates.setText(strCoordinate);
+        distance.setText(String.valueOf(bikeStation.getDistance()));
 
         reportsListView.setAdapter(new CAdapter(this, dbHelper.findReportByBikeStation(stationId), 0));
 

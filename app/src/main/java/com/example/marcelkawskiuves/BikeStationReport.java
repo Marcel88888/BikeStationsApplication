@@ -2,22 +2,31 @@ package com.example.marcelkawskiuves;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.ByteArrayOutputStream;
+
 public class BikeStationReport extends AppCompatActivity {
 
-    Intent intent;
-    Spinner status, type;
-    EditText title, description;
-    DBHelper dbHelper;
-    int stationId, id;
+    private Intent intent;
+    private Spinner status, type;
+    private EditText title, description;
+    private ImageView photo;
+    private DBHelper dbHelper;
+    private int stationId, id;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +41,7 @@ public class BikeStationReport extends AppCompatActivity {
         description = findViewById(R.id.descriptionET);
         status = findViewById(R.id.statusSp);
         type = findViewById(R.id.typeSp);
+        photo = findViewById(R.id.photo);
 
         dbHelper = BikeStationDetails.getDbHelper();
 
@@ -47,7 +57,7 @@ public class BikeStationReport extends AppCompatActivity {
         type.setAdapter(typeSAA);
 
         if (id == -1)
-            setTitle("New report");
+            this.setTitle("New report");
         else {
             Cursor cursor = dbHelper.findReportById(id);
             if (cursor.moveToFirst()) {
@@ -55,12 +65,14 @@ public class BikeStationReport extends AppCompatActivity {
                 int descriptionIndex = cursor.getColumnIndex(DBHelper.REPORT_DESCRIPTION);
                 int statusIndex = cursor.getColumnIndex(DBHelper.REPORT_STATUS);
                 int typeIndex = cursor.getColumnIndex(DBHelper.REPORT_TYPE);
+                int photoIndex = cursor.getColumnIndex(DBHelper.REPORT_PHOTO);
 
-                setTitle("Edit " + cursor.getString(nameIndex));
+                this.setTitle("Edit " + cursor.getString(nameIndex));
                 title.setText(cursor.getString(nameIndex));
                 description.setText(cursor.getString(descriptionIndex));
                 status.setSelection(getIndex(status, cursor.getString(statusIndex)));
                 type.setSelection(getIndex(type, cursor.getString(typeIndex)));
+                photo.setImageBitmap(BitmapFactory.decodeByteArray(cursor.getBlob(photoIndex), 0, cursor.getBlob(photoIndex).length));
             }
             cursor.close();
         }
@@ -76,6 +88,12 @@ public class BikeStationReport extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.add_photo:
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                }
+                return true;
             case R.id.save_report:
                 saveReport();
                 return true;
@@ -103,7 +121,8 @@ public class BikeStationReport extends AppCompatActivity {
                     title.getText().toString(),
                     description.getText().toString(),
                     status.getSelectedItem().toString(),
-                    type.getSelectedItem().toString());
+                    type.getSelectedItem().toString(),
+                    getPhotoBytesArray(imageViewToBitmap(photo)));
         }
         else {
             dbHelper.updateReport(stationId,
@@ -111,10 +130,20 @@ public class BikeStationReport extends AppCompatActivity {
                     title.getText().toString(),
                     description.getText().toString(),
                     status.getSelectedItem().toString(),
-                    type.getSelectedItem().toString());
+                    type.getSelectedItem().toString(),
+                    getPhotoBytesArray(imageViewToBitmap(photo)));
         }
         setResult(RESULT_OK);
         finish();
+    }
+
+    @Override
+    protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap photoBitmap = (Bitmap) extras.get("data");
+            photo.setImageBitmap(photoBitmap);
+        }
     }
 
 
@@ -130,5 +159,17 @@ public class BikeStationReport extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         finish();
+    }
+
+    public static byte[] getPhotoBytesArray(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0, stream);
+        return stream.toByteArray();
+    }
+
+    private Bitmap imageViewToBitmap(ImageView imageView){
+        imageView.invalidate();
+        BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
+        return drawable.getBitmap();
     }
 }

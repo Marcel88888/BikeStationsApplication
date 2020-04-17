@@ -97,7 +97,6 @@ public class BikeStation implements Serializable {
     public double getDistance() { return distance; }
 
 
-    // TODO LOKALIZACJA POBIERANA Z GPS
     public void calculateDistance() {
         Location ETSELocation = new Location("ETSELocation");
         ETSELocation.setLatitude(39.512634);

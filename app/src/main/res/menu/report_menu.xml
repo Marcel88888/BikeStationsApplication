@@ -2,8 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ValenbisiApp="http://schemas.android.com/apk/res-auto">
 
+    <item android:id="@+id/add_photo"
+        android:icon="@android:drawable/ic_menu_camera"
+        android:title="add_photo"
+        ValenbisiApp:showAsAction="always"/>
     <item android:id="@+id/save_report"
-        android:icon="@drawable/ic_cab_done_holo_light"
+        android:icon="@drawable/ic_cab_done_holo_dark"
         android:title="save_report"
         ValenbisiApp:showAsAction="always"/>
     <item android:id="@+id/delete_report"

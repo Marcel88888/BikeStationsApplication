@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ValenbisiApp="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/refresh"
+        android:icon="@drawable/stat_notify_sync"
+        android:title="refresh"
+        ValenbisiApp:showAsAction="always"/>
+</menu>

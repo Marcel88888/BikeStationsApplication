@@ -1,15 +1,18 @@
 package com.example.marcelkawskiuves;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.os.Bundle;
 import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
 
 
-public class BikeStationsList extends Activity {
+public class BikeStationsList extends AppCompatActivity {
 
     ListView stationsList;
 
@@ -19,6 +22,7 @@ public class BikeStationsList extends Activity {
         setContentView(R.layout.bikestationslistview);
 
         stationsList = findViewById(R.id.stationsList);
+        this.setTitle("ValenBisi");
 
         stationsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -29,6 +33,24 @@ public class BikeStationsList extends Activity {
             }
         });
         stationsList.setAdapter((new AdapterBikeStations(this)));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.list_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.refresh:
+                stationsList.setAdapter(new AdapterBikeStations(this));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

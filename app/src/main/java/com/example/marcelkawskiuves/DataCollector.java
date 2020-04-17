@@ -9,7 +9,6 @@ import org.json.JSONException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-// TODO DODAC OBSLUGE TEGO WYJATKU
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.io.StringWriter;
@@ -20,8 +19,9 @@ import java.net.URL;
 import uk.me.jstott.jcoord.UTMRef;
 
 // TODO POPRAWIC ODLEGLOSC NA LISTVIEW
-// TODO DODATKOWE IMPLEMENTACJE (W TYM SORTOWANIE)
+// TODO LOKALIZACJA POBIERANA Z GPS
 // TODO LISTVIEW UCINA OSTATNIE PRZYSTANKI
+// TODO LOGO APLIKACJI
 
 
 public class DataCollector extends AsyncTask<String, Void, ArrayList>{
@@ -56,7 +56,11 @@ public class DataCollector extends AsyncTask<String, Void, ArrayList>{
                 writer.write(buffer, 0, n);
             }
             in.close();
-        } catch (IOException e) {
+        }
+        catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
 

@@ -4,7 +4,6 @@ import android.app.Service;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,8 +35,6 @@ public class AdapterBikeStations extends android.widget.BaseAdapter{
         this.dbHelper = new DBHelper(c);
         this.dataCollector = new DataCollector();
         Init();
-        for (int i=0; i<bikeStations.size();i++)
-            System.out.println(bikeStations.get(i).getNumber());
     }
 
     public void Init() {
@@ -107,6 +104,7 @@ public class AdapterBikeStations extends android.widget.BaseAdapter{
 
         return v;
     }
+
 
     class StationsComparator implements Comparator<BikeStation> {
 

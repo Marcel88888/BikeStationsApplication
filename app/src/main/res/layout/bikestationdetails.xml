@@ -3,7 +3,7 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
     app:layout_height="match_parent"
     app:columnCount="2"
-    app:rowCount="9"
+    app:rowCount="10"
 
 
     <TextView
@@ -134,13 +134,35 @@
 
     <TextView
         android:id="@+id/coordinatesTV"
-        android:layout_width="280dp"
+        android:layout_width="270dp"
         android:layout_height="wrap_content"
         android:layout_row="6"
         android:layout_column="1"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="5dp" />
+
+    <TextView
+        android:id="@+id/distanceTitle"
+        android:layout_width="87dp"
+        android:layout_height="wrap_content"
+        android:layout_row="7"
+        android:layout_column="0"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="15dp"
+        android:text="Distance"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/distanceTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_row="7"
+        android:layout_column="1"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="5dp" />
+
 
     <TextView
         android:id="@+id/reportsTV"
@@ -151,7 +173,7 @@
         android:textColor="@android:color/black"
         android:textSize="24sp"
         android:layout_column="0"
-        android:layout_row="7" />
+        android:layout_row="8" />
 
 
     <ListView
@@ -161,7 +183,7 @@
         android:layout_column="0"
         android:layout_columnSpan="2"
         android:layout_gravity="bottom|fill_vertical"
-        android:layout_row="8" />
+        android:layout_row="9" />
 
 
 </GridLayout>
