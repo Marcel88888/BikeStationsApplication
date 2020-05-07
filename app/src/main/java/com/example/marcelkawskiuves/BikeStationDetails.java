@@ -1,5 +1,6 @@
 package com.example.marcelkawskiuves;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.content.Intent;
 import android.view.View;
@@ -17,7 +18,10 @@ public class BikeStationDetails extends AppCompatActivity {
 
     private Intent intent;
     private BikeStation bikeStation;
-    private int stationId;
+    private int stationIndex;
+    private Location deviceLocation;
+    private String dist;
+    private String distanceUnit;
     private TextView number;
     private TextView address;
     private TextView total;
@@ -40,8 +44,18 @@ public class BikeStationDetails extends AppCompatActivity {
 
         dbHelper = new DBHelper(this);
         intent = getIntent();
-        stationId = intent.getIntExtra("bikeStationId", -1);
-        bikeStation = new AdapterBikeStations(this).getItem(stationId);
+        //stationId = intent.getIntExtra("bikeStationId", -1);
+        //stationIndex = intent.getIntExtra("listViewPosition", -1);
+        //deviceLocation = intent.getExtras().getParcelable("deviceLocation");
+        //dist = intent.getStringExtra("distanceString");
+        //distanceUnit = intent.getStringExtra("distanceUnit");
+        //System.out.println(distanceUnit);
+        //double dist = intent.getDoubleExtra("distance", -1);
+        //String distanceUnit = intent.getStringExtra("distanceUnit");
+        //bikeStation = new AdapterBikeStations(this, deviceLocation).getItem(stationIndex);
+        bikeStation = (BikeStation) intent.getSerializableExtra("bikeStation");
+        System.out.println("BIKE STATIOOOOOOOOON");
+        System.out.println(bikeStation.getNumber());
 
         number = findViewById(R.id.numberTV);
         address = findViewById(R.id.addressTV);
@@ -53,7 +67,12 @@ public class BikeStationDetails extends AppCompatActivity {
 
         reportsListView = findViewById(R.id.reportsLV);
 
-        setTitle(bikeStation.getName());
+        String name = bikeStation.getName();
+        name = name.substring(name.indexOf("_")+1).replaceAll("_", " ");
+
+        //dist = dist + " " + distanceUnit;
+
+        setTitle(name);
         number.setText(String.valueOf(bikeStation.getNumber()));
         address.setText(bikeStation.getAddress());
         total.setText(String.valueOf(bikeStation.getTotal()));
@@ -63,14 +82,14 @@ public class BikeStationDetails extends AppCompatActivity {
         coordinates.setText(strCoordinate);
         distance.setText(String.valueOf(bikeStation.getDistance()));
 
-        reportsListView.setAdapter(new CAdapter(this, dbHelper.findReportByBikeStation(stationId), 0));
+        reportsListView.setAdapter(new CAdapter(this, dbHelper.findReportByBikeStation(bikeStation.getNumber()), 0));
 
         reportsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(BikeStationDetails.this, BikeStationReport.class);
                 intent.putExtra("stationId", bikeStation.getNumber());
-                intent.putExtra("id", Integer.parseInt(((TextView) view.findViewById(R.id.reportId)).getText().toString()));
+                intent.putExtra("reportId", Integer.parseInt(((TextView) view.findViewById(R.id.reportId)).getText().toString()));
                 startActivityForResult(intent, 1);
             }
         });
@@ -117,7 +136,7 @@ public class BikeStationDetails extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            reportsListView.setAdapter(new CAdapter(this, dbHelper.findReportByBikeStation(stationId), 0));
+            reportsListView.setAdapter(new CAdapter(this, dbHelper.findReportByBikeStation(bikeStation.getNumber()), 0));
         }
     }
 

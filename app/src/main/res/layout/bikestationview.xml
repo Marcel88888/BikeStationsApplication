@@ -54,6 +54,15 @@
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/distance" />
 
+    <TextView
+        android:id="@+id/bikestationviewdistanceunit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bikestationviewname"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/bikestationviewdistance" />
+
     <ImageView
         android:id="@+id/report"
         android:layout_width="wrap_content"

@@ -35,7 +35,7 @@ public class BikeStationReport extends AppCompatActivity {
 
         intent = getIntent();
         stationId = intent.getIntExtra("stationId", -1);
-        id = intent.getIntExtra("id", -1);
+        id = intent.getIntExtra("reportId", -1);
 
         title = findViewById(R.id.titleET);
         description = findViewById(R.id.descriptionET);

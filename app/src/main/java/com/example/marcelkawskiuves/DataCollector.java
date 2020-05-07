@@ -18,10 +18,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import uk.me.jstott.jcoord.UTMRef;
 
-// TODO POPRAWIC ODLEGLOSC NA LISTVIEW
-// TODO LOKALIZACJA POBIERANA Z GPS
-// TODO LISTVIEW UCINA OSTATNIE PRZYSTANKI
 // TODO LOGO APLIKACJI
+// TODO NAZWY ZMIENNYCH W XMLACH ZEBY BYLY WIELKIE LITERY
+// TODO ZMIENIC NAZWY PLIKOW JAVY
+// TODO POBIERANIE OSTATNIO ZNANEJ LOKALIZACJI
+// TODO UZYWANIE KLASY REPORT ?
+// TODO POPRAWIC METODY Z CZYTANIA LOKALIZACJI Z INTERFEJSU LOCATIONLISTENER
 
 
 public class DataCollector extends AsyncTask<String, Void, ArrayList>{
@@ -78,23 +80,24 @@ public class DataCollector extends AsyncTask<String, Void, ArrayList>{
             for (int i = 0; i < jsonArray.length(); i++) {
                 try {
                     JSONObject obj = jsonArray.getJSONObject(i);
+                    JSONObject geometry = obj.getJSONObject("geometry");
+                    JSONArray coordinates = geometry.getJSONArray("coordinates");
+                    JSONObject properties = obj.getJSONObject("properties");
 
-                    String name = obj.getJSONObject("properties").getString("name");
-                    name = name.substring(name.indexOf("_")+1).replaceAll("_", " ");
+                    double coordinate1 = coordinates.getDouble(0);
+                    double coordinate2 = coordinates.getDouble(1);
 
-                    double coordinate1 = obj.getJSONObject("geometry").getJSONArray("coordinates").getDouble(0);
-                    double coordinate2 = obj.getJSONObject("geometry").getJSONArray("coordinates").getDouble(0);
                     UTMRef utm = new UTMRef(coordinate1, coordinate2, 'N', 30);
                     coordinate1 = utm.toLatLng().getLat();
                     coordinate2 = utm.toLatLng().getLng();
 
                     bikeStations.add(new BikeStation(
-                            name,
-                            obj.getJSONObject("properties").getInt("number"),
-                            obj.getJSONObject("properties").getString("address"),
-                            obj.getJSONObject("properties").getInt("total"),
-                            obj.getJSONObject("properties").getInt("available"),
-                            obj.getJSONObject("properties").getInt("free"),
+                            properties.getString("name"),
+                            properties.getInt("number"),
+                            properties.getString("address"),
+                            properties.getInt("total"),
+                            properties.getInt("available"),
+                            properties.getInt("free"),
                             coordinate1,
                             coordinate2));
                 } catch (JSONException e) {

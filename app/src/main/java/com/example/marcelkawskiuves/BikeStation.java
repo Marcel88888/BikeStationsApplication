@@ -97,13 +97,17 @@ public class BikeStation implements Serializable {
     public double getDistance() { return distance; }
 
 
-    public void calculateDistance() {
+    public void calculateDistance(Location deviceLocation) {
+        /*
         Location ETSELocation = new Location("ETSELocation");
         ETSELocation.setLatitude(39.512634);
         ETSELocation.setLongitude(-0.424035);
+        */
         Location bikeStationLocation = new Location("bikeStationLocation");
         bikeStationLocation.setLatitude(this.getCoordinate1());
         bikeStationLocation.setLongitude(this.getCoordinate2());
-        this.distance = bikeStationLocation.distanceTo(ETSELocation);
+        if (deviceLocation != null) {
+            this.distance = bikeStationLocation.distanceTo(deviceLocation);
+        }
     }
 }
