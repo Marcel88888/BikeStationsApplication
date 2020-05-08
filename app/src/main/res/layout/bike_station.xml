@@ -4,7 +4,7 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/bikestationviewname"
+        android:id="@+id/bikeStationViewName"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_alignParentStart="true"
@@ -20,17 +20,17 @@
         android:id="@+id/numTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/bikestationviewname"
+        android:layout_below="@+id/bikeStationViewName"
         android:layout_gravity="center_vertical"
         android:layout_marginTop="5dp"
         android:layout_marginStart="8dp"
         android:text="#" />
 
     <TextView
-        android:id="@+id/bikestationviewnumber"
+        android:id="@+id/bikeStationViewNumber"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/bikestationviewname"
+        android:layout_below="@+id/bikeStationViewName"
         android:layout_marginStart="1dp"
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/numTitle"/>
@@ -39,55 +39,47 @@
         android:id="@+id/distance"
         android:layout_width="wrap_content"
         android:layout_height="19dp"
-        android:layout_below="@+id/bikestationviewname"
+        android:layout_below="@+id/bikeStationViewName"
         android:layout_marginStart="43dp"
         android:layout_marginTop="5dp"
-        android:layout_toEndOf="@+id/bikestationviewnumber"
-        android:src="@drawable/baseline_map_black_18dp" />
+        android:layout_toEndOf="@+id/bikeStationViewNumber"
+        android:src="@drawable/map_icon" />
+
 
     <TextView
-        android:id="@+id/bikestationviewdistance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/bikestationviewname"
+        android:id="@+id/bikeStationViewDistance"
+        android:layout_width="140dp"
+        android:layout_height="20dp"
+        android:layout_below="@+id/bikeStationViewName"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/distance" />
-
-    <TextView
-        android:id="@+id/bikestationviewdistanceunit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/bikestationviewname"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="5dp"
-        android:layout_toEndOf="@+id/bikestationviewdistance" />
 
     <ImageView
         android:id="@+id/report"
         android:layout_width="wrap_content"
         android:layout_height="19dp"
-        android:layout_below="@+id/bikestationviewname"
+        android:layout_below="@+id/bikeStationViewName"
         android:layout_marginStart="209dp"
         android:layout_marginTop="5dp"
-        android:layout_toEndOf="@+id/bikestationviewnumber"
-        android:src="@drawable/baseline_error_black_18dp" />
+        android:layout_toEndOf="@+id/bikeStationViewNumber"
+        android:src="@drawable/error_icon" />
 
     <TextView
-        android:id="@+id/bikestationviewreports"
+        android:id="@+id/bikeStationViewReports"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/bikestationviewname"
+        android:layout_below="@+id/bikeStationViewName"
         android:layout_marginStart="1dp"
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/report" />
 
 
     <TextView
-        android:id="@+id/bikestationviewavailable"
+        android:id="@+id/bikeStationViewAvailable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/bikestationviewname"
+        android:layout_below="@+id/bikeStationViewName"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:layout_toStartOf="@+id/bike" />
@@ -96,11 +88,11 @@
         android:id="@+id/bike"
         android:layout_width="22dp"
         android:layout_height="19dp"
-        android:layout_below="@+id/bikestationviewname"
+        android:layout_below="@+id/bikeStationViewName"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
-        android:src="@drawable/icons8_march_50" />
+        android:src="@drawable/bike_icon" />
 
 
 </RelativeLayout>

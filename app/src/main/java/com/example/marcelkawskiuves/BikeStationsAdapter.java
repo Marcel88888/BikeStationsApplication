@@ -15,27 +15,23 @@ import java.util.Collections;
 import java.util.concurrent.ExecutionException;
 
 
-
-public class AdapterBikeStations extends android.widget.BaseAdapter {
+public class BikeStationsAdapter extends android.widget.BaseAdapter {
 
     private ArrayList<BikeStation> bikeStations;
     private DBHelper dbHelper;
     private DataCollector dataCollector;
     private Location deviceLocation;
-    private String distanceString;
-    private String distanceUnit;
-    Context context;
+    private Context context;
 
     static class ViewHolder {
         TextView number;
         TextView name;
         TextView distance;
-        //TextView distanceUnit;
         TextView reports;
         TextView available;
     }
 
-    public AdapterBikeStations(Context c, Location location) {
+    public BikeStationsAdapter(Context c, Location location) {
 
         this.context = c;
         this.dbHelper = new DBHelper(c);
@@ -45,12 +41,16 @@ public class AdapterBikeStations extends android.widget.BaseAdapter {
             this.bikeStations = dataCollector.execute().get();
             for (BikeStation bikeStation: bikeStations) {
                 bikeStation.calculateDistance(deviceLocation);
-            }
-            Collections.sort(bikeStations, new StationsComparator());
-            System.out.println("PO SORTOWANIUUUUUUUUUUU");
-            System.out.println(location);
-            for (BikeStation bikeStation: bikeStations) {
-                System.out.println(bikeStation.getNumber());
+                double distance = bikeStation.getDistance();
+                if (distance >= 1000) {
+                    distance /= 1000;
+                    bikeStation.setDistanceString(String.format("%.1f", distance));
+                    bikeStation.setDistanceUnit("km");
+                }
+                else {
+                    bikeStation.setDistanceString(String.format("%.0f", distance));
+                    bikeStation.setDistanceUnit("m");
+                }
             }
             Collections.sort(bikeStations, new StationsComparator());
         } catch (InterruptedException e) {
@@ -67,26 +67,12 @@ public class AdapterBikeStations extends android.widget.BaseAdapter {
 
     @Override
     public BikeStation getItem(int index){
-        System.out.println("INDEEEEEEEEEEX");
-        System.out.println(index);
         return bikeStations.get(index);
     }
 
     @Override
     public long getItemId(int position) {
         return bikeStations.get(position).getNumber();
-    }
-
-    public String getDistanceString() {
-        return distanceString;
-    }
-
-    public String getDistanceUnit() {
-        return distanceUnit;
-    }
-
-    public ArrayList<BikeStation> getBikeStations() {
-        return bikeStations;
     }
 
     @Override
@@ -96,15 +82,14 @@ public class AdapterBikeStations extends android.widget.BaseAdapter {
         if (v == null) {
             LayoutInflater li =
                     (LayoutInflater)context.getSystemService(Service.LAYOUT_INFLATER_SERVICE);
-            v = li.inflate(R.layout.bikestationview, null) ;
+            v = li.inflate(R.layout.bike_station, null) ;
             holder = new ViewHolder();
 
-            holder.number = v.findViewById(R.id.bikestationviewnumber);
-            holder.name = v.findViewById(R.id.bikestationviewname);
-            holder.distance = v.findViewById(R.id.bikestationviewdistance);
-            //holder.distanceUnit = v.findViewById(R.id.bikestationviewdistanceunit);
-            holder.reports = v.findViewById(R.id.bikestationviewreports);
-            holder.available = v.findViewById(R.id.bikestationviewavailable);
+            holder.number = v.findViewById(R.id.bikeStationViewNumber);
+            holder.name = v.findViewById(R.id.bikeStationViewName);
+            holder.distance = v.findViewById(R.id.bikeStationViewDistance);
+            holder.reports = v.findViewById(R.id.bikeStationViewReports);
+            holder.available = v.findViewById(R.id.bikeStationViewAvailable);
             v.setTag(holder);
         } else {
             holder = (ViewHolder)v.getTag();
@@ -121,22 +106,10 @@ public class AdapterBikeStations extends android.widget.BaseAdapter {
         String name = bikeStation.getName();
         name = name.substring(name.indexOf("_")+1).replaceAll("_", " ");
 
-        double distance = bikeStation.getDistance();
-        if (distance >= 1000) {
-            distanceUnit = "km";
-            //holder.distanceUnit.setText(distanceUnit);
-            distance /= 1000;
-            distanceString = String.format("%.1f", distance) + distanceUnit;
-        }
-        else {
-            distanceUnit = "m";
-            //holder.distanceUnit.setText(distanceUnit);
-            distanceString = String.format("%.0f", distance) + distanceUnit;
-        }
-
         holder.number.setText(String.valueOf(bikeStation.getNumber()));
         holder.name.setText(name);
-        holder.distance.setText(distanceString);
+        String distanceDisplayString = bikeStation.getDistanceString() + " " + bikeStation.getDistanceUnit();
+        holder.distance.setText(distanceDisplayString);
         holder.reports.setText(String.valueOf(dbHelper.countReports(bikeStation.getNumber())));
         holder.available.setText(String.valueOf(bikeStation.getAvailable()));
 

@@ -16,20 +16,16 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
 import uk.me.jstott.jcoord.UTMRef;
 
-// TODO LOGO APLIKACJI
-// TODO NAZWY ZMIENNYCH W XMLACH ZEBY BYLY WIELKIE LITERY
-// TODO ZMIENIC NAZWY PLIKOW JAVY
 // TODO POBIERANIE OSTATNIO ZNANEJ LOKALIZACJI
-// TODO UZYWANIE KLASY REPORT ?
-// TODO POPRAWIC METODY Z CZYTANIA LOKALIZACJI Z INTERFEJSU LOCATIONLISTENER
-
+// TODO POMYSLEC NAD DODANIEM KLASY REPORT ZEBY NIE CZYTAC Z BAZY DANYCH
 
 public class DataCollector extends AsyncTask<String, Void, ArrayList>{
 
     @Override
-    protected  ArrayList<BikeStation> doInBackground(String... params) {
+    protected ArrayList<BikeStation> doInBackground(String... params) {
 
         ArrayList<BikeStation> bikeStations = new ArrayList<>();
         String jsonString;

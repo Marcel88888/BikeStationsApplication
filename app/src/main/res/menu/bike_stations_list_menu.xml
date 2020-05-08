@@ -3,7 +3,7 @@
     xmlns:ValenbisiApp="http://schemas.android.com/apk/res-auto">
 
     <item android:id="@+id/refresh"
-        android:icon="@drawable/stat_notify_sync"
+        android:icon="@drawable/refresh_icon"
         android:title="refresh"
         ValenbisiApp:showAsAction="always"/>
 </menu>

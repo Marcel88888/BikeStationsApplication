@@ -2,16 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ValenbisiApp="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/add_photo"
+    <item android:id="@+id/addPhoto"
         android:icon="@android:drawable/ic_menu_camera"
-        android:title="add_photo"
+        android:title="addPhoto"
         ValenbisiApp:showAsAction="always"/>
-    <item android:id="@+id/save_report"
-        android:icon="@drawable/ic_cab_done_holo_dark"
-        android:title="save_report"
+    <item android:id="@+id/saveReport"
+        android:icon="@drawable/tick_icon"
+        android:title="saveReport"
         ValenbisiApp:showAsAction="always"/>
-    <item android:id="@+id/delete_report"
+    <item android:id="@+id/deleteReport"
         android:icon="@android:drawable/ic_menu_delete"
-        android:title="delete_report"
+        android:title="deleteReport"
         ValenbisiApp:showAsAction="always"/>
 </menu>

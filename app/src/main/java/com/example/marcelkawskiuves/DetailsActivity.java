@@ -1,6 +1,6 @@
 package com.example.marcelkawskiuves;
 
-import android.location.Location;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.content.Intent;
 import android.view.View;
@@ -14,14 +14,10 @@ import android.net.Uri;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-public class BikeStationDetails extends AppCompatActivity {
+public class DetailsActivity extends AppCompatActivity {
 
     private Intent intent;
     private BikeStation bikeStation;
-    private int stationIndex;
-    private Location deviceLocation;
-    private String dist;
-    private String distanceUnit;
     private TextView number;
     private TextView address;
     private TextView total;
@@ -40,22 +36,11 @@ public class BikeStationDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.bikestationdetails);
+        setContentView(R.layout.details);
 
         dbHelper = new DBHelper(this);
         intent = getIntent();
-        //stationId = intent.getIntExtra("bikeStationId", -1);
-        //stationIndex = intent.getIntExtra("listViewPosition", -1);
-        //deviceLocation = intent.getExtras().getParcelable("deviceLocation");
-        //dist = intent.getStringExtra("distanceString");
-        //distanceUnit = intent.getStringExtra("distanceUnit");
-        //System.out.println(distanceUnit);
-        //double dist = intent.getDoubleExtra("distance", -1);
-        //String distanceUnit = intent.getStringExtra("distanceUnit");
-        //bikeStation = new AdapterBikeStations(this, deviceLocation).getItem(stationIndex);
         bikeStation = (BikeStation) intent.getSerializableExtra("bikeStation");
-        System.out.println("BIKE STATIOOOOOOOOON");
-        System.out.println(bikeStation.getNumber());
 
         number = findViewById(R.id.numberTV);
         address = findViewById(R.id.addressTV);
@@ -70,8 +55,6 @@ public class BikeStationDetails extends AppCompatActivity {
         String name = bikeStation.getName();
         name = name.substring(name.indexOf("_")+1).replaceAll("_", " ");
 
-        //dist = dist + " " + distanceUnit;
-
         setTitle(name);
         number.setText(String.valueOf(bikeStation.getNumber()));
         address.setText(bikeStation.getAddress());
@@ -80,19 +63,32 @@ public class BikeStationDetails extends AppCompatActivity {
         free.setText(String.valueOf(bikeStation.getFree()));
         String strCoordinate = bikeStation.getCoordinate1() + ", " + bikeStation.getCoordinate2();
         coordinates.setText(strCoordinate);
-        distance.setText(String.valueOf(bikeStation.getDistance()));
+        String distanceDisplayString = bikeStation.getDistanceString() + " " + bikeStation.getDistanceUnit();
+        distance.setText(distanceDisplayString);
 
-        reportsListView.setAdapter(new CAdapter(this, dbHelper.findReportByBikeStation(bikeStation.getNumber()), 0));
+        final Cursor reports = dbHelper.findReportByBikeStation(bikeStation.getNumber());
 
         reportsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(BikeStationDetails.this, BikeStationReport.class);
+                Intent intent = new Intent(DetailsActivity.this, ReportActivity.class);
+                final Cursor reports = dbHelper.findReportByBikeStation(bikeStation.getNumber());
+                reports.moveToFirst();
+                int i = 0;
+                if (reports.getCount()>1) {
+                    while (i!=position) {
+                        reports.moveToNext();
+                        i+=1;
+                    }
+                }
                 intent.putExtra("stationId", bikeStation.getNumber());
-                intent.putExtra("reportId", Integer.parseInt(((TextView) view.findViewById(R.id.reportId)).getText().toString()));
+                intent.putExtra("reportId", Integer.valueOf(reports.getString(reports.getColumnIndex(DBHelper.REPORT_ID))));
                 startActivityForResult(intent, 1);
             }
         });
+
+        final ReportAdapter adapter = new ReportAdapter(this, reports, 0);
+        reportsListView.setAdapter(adapter);
     }
 
     @Override
@@ -105,8 +101,8 @@ public class BikeStationDetails extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.new_report:
-                Intent intent = new Intent(BikeStationDetails.this, BikeStationReport.class);
+            case R.id.newReport:
+                Intent intent = new Intent(DetailsActivity.this, ReportActivity.class);
                 intent.putExtra("stationId", bikeStation.getNumber());
                 intent.putExtra("id", -1);
                 startActivityForResult(intent, 1);
@@ -136,10 +132,11 @@ public class BikeStationDetails extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            reportsListView.setAdapter(new CAdapter(this, dbHelper.findReportByBikeStation(bikeStation.getNumber()), 0));
+            final Cursor reports = dbHelper.findReportByBikeStation(bikeStation.getNumber());
+            final ReportAdapter adapter = new ReportAdapter(this, reports, 0);
+            reportsListView.setAdapter(adapter);
         }
     }
-
 
     @Override
     public void onBackPressed() {

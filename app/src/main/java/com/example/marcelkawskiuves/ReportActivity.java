@@ -18,7 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.ByteArrayOutputStream;
 
-public class BikeStationReport extends AppCompatActivity {
+public class ReportActivity extends AppCompatActivity {
 
     private Intent intent;
     private Spinner status, type;
@@ -26,12 +26,12 @@ public class BikeStationReport extends AppCompatActivity {
     private ImageView photo;
     private DBHelper dbHelper;
     private int stationId, id;
-    static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.bikestationreport);
+        setContentView(R.layout.report);
 
         intent = getIntent();
         stationId = intent.getIntExtra("stationId", -1);
@@ -43,7 +43,7 @@ public class BikeStationReport extends AppCompatActivity {
         type = findViewById(R.id.typeSp);
         photo = findViewById(R.id.photo);
 
-        dbHelper = BikeStationDetails.getDbHelper();
+        dbHelper = DetailsActivity.getDbHelper();
 
         String[] statuses = getResources().getStringArray(R.array.report_statuses);
         String[] types = getResources().getStringArray(R.array.report_types);
@@ -88,16 +88,16 @@ public class BikeStationReport extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.add_photo:
+            case R.id.addPhoto:
                 Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
                     startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
                 }
                 return true;
-            case R.id.save_report:
+            case R.id.saveReport:
                 saveReport();
                 return true;
-            case R.id.delete_report:
+            case R.id.deleteReport:
                 deleteReport();
                 return true;
             default:

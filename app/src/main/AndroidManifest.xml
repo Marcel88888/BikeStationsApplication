@@ -13,14 +13,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
 
-        <activity android:name=".BikeStationsList">
+        <activity android:name=".BikeStationsListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BikeStationDetails"/>
-        <activity android:name=".BikeStationReport"/>
+        <activity android:name=".DetailsActivity"/>
+        <activity android:name=".ReportActivity"/>
     </application>
 </manifest>

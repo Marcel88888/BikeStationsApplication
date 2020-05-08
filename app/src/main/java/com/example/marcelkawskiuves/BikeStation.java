@@ -1,7 +1,6 @@
 package com.example.marcelkawskiuves;
 
 import android.location.Location;
-
 import java.io.Serializable;
 
 public class BikeStation implements Serializable {
@@ -12,10 +11,11 @@ public class BikeStation implements Serializable {
     private int total;
     private int available;
     private int free;
-    private int reports = 0;
     private double coordinate1;
     private double coordinate2;
     private double distance = Double.MAX_VALUE;
+    private String distanceString = "";
+    private String distanceUnit = "";
 
 
     public BikeStation(String name, int number, String address, int total, int available, int free, double coordinate1, double coordinate2){
@@ -34,33 +34,9 @@ public class BikeStation implements Serializable {
         this.name = name;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
-    }
+    public void setDistanceString(String distanceString) { this.distanceString = distanceString; }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public void setTotal(int total) {
-        this.total = total;
-    }
-
-    public void setAvailable(int available) {
-        this.available = available;
-    }
-
-    public void setFree(int free) {
-        this.free = free;
-    }
-
-    public void setCoordinate1(double coordinate1) {
-        this.coordinate1 = coordinate1;
-    }
-
-    public void setCoordinate2(double coordinate2) {
-        this.coordinate2 = coordinate2;
-    }
+    public void setDistanceUnit(String distanceUnit) { this.distanceUnit = distanceUnit; }
 
     public String getName() {
         return name;
@@ -96,13 +72,11 @@ public class BikeStation implements Serializable {
 
     public double getDistance() { return distance; }
 
+    public String getDistanceString() { return distanceString; }
+
+    public String getDistanceUnit() { return distanceUnit; }
 
     public void calculateDistance(Location deviceLocation) {
-        /*
-        Location ETSELocation = new Location("ETSELocation");
-        ETSELocation.setLatitude(39.512634);
-        ETSELocation.setLongitude(-0.424035);
-        */
         Location bikeStationLocation = new Location("bikeStationLocation");
         bikeStationLocation.setLatitude(this.getCoordinate1());
         bikeStationLocation.setLongitude(this.getCoordinate2());
