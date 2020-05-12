@@ -2,7 +2,6 @@ package com.example.marcelkawskiuves;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -10,8 +9,6 @@ import android.location.LocationManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.util.Log;
 import android.widget.Toast;
@@ -34,27 +31,18 @@ public class BikeStationsListActivity extends AppCompatActivity implements Locat
         stationsList = findViewById(R.id.stationsList);
         this.setTitle("ValenBisi");
 
-        final BikeStationsAdapter bikeStationsAdapter = new BikeStationsAdapter(this, deviceLocation);
+        final BikeStationsAdapter bikeStationsAdapter = new BikeStationsAdapter(this, deviceLocation, this);
         stationsList.setAdapter(bikeStationsAdapter);
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 100);
-            return;
+            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION }, 100);
         } else {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
         }
-
-        stationsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent act2 = new Intent(BikeStationsListActivity.this, DetailsActivity.class);
-                act2.putExtra("bikeStation", bikeStationsAdapter.getItem(position));
-                startActivity(act2);
-            }
-        });
-
     }
+
+    public ListView getStationsList() { return stationsList; }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -67,17 +55,8 @@ public class BikeStationsListActivity extends AppCompatActivity implements Locat
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.refresh:
-                final BikeStationsAdapter newBikeStationsAdapter = new BikeStationsAdapter(this, deviceLocation);
+                final BikeStationsAdapter newBikeStationsAdapter = new BikeStationsAdapter(this, deviceLocation, this);
                 stationsList.setAdapter(newBikeStationsAdapter);
-                stationsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent act2 = new Intent(BikeStationsListActivity.this, DetailsActivity.class);
-                        BikeStation bikeStation = newBikeStationsAdapter.getItem(position);
-                        act2.putExtra("bikeStation", bikeStation);
-                        startActivity(act2);
-                    }
-                });
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -87,7 +66,7 @@ public class BikeStationsListActivity extends AppCompatActivity implements Locat
     @Override
     protected void onResume() {
         super.onResume();
-        stationsList.setAdapter(new BikeStationsAdapter(this, deviceLocation));
+        stationsList.setAdapter(new BikeStationsAdapter(this, deviceLocation, this));
     }
 
     @Override

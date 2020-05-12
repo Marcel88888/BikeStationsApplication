@@ -2,9 +2,11 @@ package com.example.marcelkawskiuves;
 
 import android.app.Service;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.view.LayoutInflater;
+import android.widget.AdapterView;
 import android.widget.TextView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,12 +33,22 @@ public class BikeStationsAdapter extends android.widget.BaseAdapter {
         TextView available;
     }
 
-    public BikeStationsAdapter(Context c, Location location) {
+    public BikeStationsAdapter(Context c, Location location, BikeStationsListActivity bikeStationsListActivity) {
 
         this.context = c;
         this.dbHelper = new DBHelper(c);
         this.dataCollector = new DataCollector();
         this.deviceLocation = location;
+        final BikeStationsListActivity BSActivity = bikeStationsListActivity;
+        bikeStationsListActivity.getStationsList().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent act2 = new Intent(BSActivity, DetailsActivity.class);
+                BikeStation bikeStation = getItem(position);
+                act2.putExtra("bikeStation", bikeStation);
+                BSActivity.startActivity(act2);
+            }
+        });
         try {
             this.bikeStations = dataCollector.execute().get();
             for (BikeStation bikeStation: bikeStations) {

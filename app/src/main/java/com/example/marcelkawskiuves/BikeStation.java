@@ -13,7 +13,7 @@ public class BikeStation implements Serializable {
     private int free;
     private double coordinate1;
     private double coordinate2;
-    private double distance = Double.MAX_VALUE;
+    private double distance;
     private String distanceString = "";
     private String distanceUnit = "";
 

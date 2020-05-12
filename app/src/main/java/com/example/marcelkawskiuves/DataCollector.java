@@ -19,10 +19,8 @@ import java.net.URL;
 
 import uk.me.jstott.jcoord.UTMRef;
 
-// TODO POBIERANIE OSTATNIO ZNANEJ LOKALIZACJI
-// TODO POMYSLEC NAD DODANIEM KLASY REPORT ZEBY NIE CZYTAC Z BAZY DANYCH
 
-public class DataCollector extends AsyncTask<String, Void, ArrayList>{
+public class DataCollector extends AsyncTask<String, Void, ArrayList> {
 
     @Override
     protected ArrayList<BikeStation> doInBackground(String... params) {
@@ -32,7 +30,7 @@ public class DataCollector extends AsyncTask<String, Void, ArrayList>{
         JSONArray jsonArray = null;
         JSONObject jsonObject;
 
-        String url = "https://drive.google.com/uc?export=download&id=10bsaBPZ-5QoAF9ludW0Lxt8svrHFyMH6";
+        String url = "http://mapas.valencia.es/lanzadera/opendata/Valenbisi/JSON";
         Writer writer = new StringWriter();
         char[] buffer = new char[1024];
         try {

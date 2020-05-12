@@ -72,15 +72,7 @@ public class DetailsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(DetailsActivity.this, ReportActivity.class);
-                final Cursor reports = dbHelper.findReportByBikeStation(bikeStation.getNumber());
-                reports.moveToFirst();
-                int i = 0;
-                if (reports.getCount()>1) {
-                    while (i!=position) {
-                        reports.moveToNext();
-                        i+=1;
-                    }
-                }
+                Cursor reports = setOnClickedReport(position);
                 intent.putExtra("stationId", bikeStation.getNumber());
                 intent.putExtra("reportId", Integer.valueOf(reports.getString(reports.getColumnIndex(DBHelper.REPORT_ID))));
                 startActivityForResult(intent, 1);
@@ -142,5 +134,18 @@ public class DetailsActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+
+    public Cursor setOnClickedReport(int position) {
+        final Cursor reports = dbHelper.findReportByBikeStation(bikeStation.getNumber());
+        reports.moveToFirst();
+        int i = 0;
+        if (reports.getCount() > 1) {
+            while (i!=position) {
+                reports.moveToNext();
+                i += 1;
+            }
+        }
+        return reports;
     }
 }
