@@ -94,7 +94,7 @@ public class BikeStationsAdapter extends android.widget.BaseAdapter {
         if (v == null) {
             LayoutInflater li =
                     (LayoutInflater)context.getSystemService(Service.LAYOUT_INFLATER_SERVICE);
-            v = li.inflate(R.layout.bike_station, null) ;
+            v = li.inflate(R.layout.bike_station_row, null) ;
             holder = new ViewHolder();
 
             holder.number = v.findViewById(R.id.bikeStationViewNumber);

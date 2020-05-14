@@ -34,12 +34,7 @@ public class BikeStationsListActivity extends AppCompatActivity implements Locat
         final BikeStationsAdapter bikeStationsAdapter = new BikeStationsAdapter(this, deviceLocation, this);
         stationsList.setAdapter(bikeStationsAdapter);
 
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION }, 100);
-        } else {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-        }
+        setLocationOrGetPermissions();
     }
 
     public ListView getStationsList() { return stationsList; }
@@ -101,10 +96,21 @@ public class BikeStationsListActivity extends AppCompatActivity implements Locat
                     }
 
                 } else {
-                    Toast.makeText(this, "location fail", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Location unavailable", Toast.LENGTH_SHORT).show();
                 }
                 return;
             }
+        }
+    }
+
+    public void setLocationOrGetPermissions() {
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION }, 100);
+        } else {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+            deviceLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         }
     }
 }
