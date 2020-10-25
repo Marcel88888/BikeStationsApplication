@@ -10,9 +10,6 @@ Android application for bicycle sharing system
 * [To-do list](to-do-list)
 
 ## General info
-![Logo](./img/logo.png)\
-Logo used is an official logo of the ValenBisi
-
 Project made for the subject Applications for Mobile Devices on Universitat de Valencia during my Erasmus+ exchange. I developed the application for Android devices. The application can be used for Valenbisi, the bike rental system of the City of Valencia. The app allows users to check the status of the different bike stations and to create incident reports. I used the services of the City Council of Valencia to retrieve data of Valenbisi bike stations. This query is carried out using a JSON file that can be requested from the web service of Valencia’s open data website to display real-time data to users. On the list of bike stations, the information about each of them is showed. I also created a local database that allows the creation of new incident reports associated with each of the bike station. This practice was developed using Android Studio.
 The goals of the practice were the following:
 * working with JSON format files
