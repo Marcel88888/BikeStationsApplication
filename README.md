@@ -21,13 +21,21 @@ The goals of the practice were the following:
 * working with HTTP services
 
 ## Screenshots
-![Screenshot1](./img/screenshot1.png)
-![Screenshot2](./img/screenshot2.png)
-![Screenshot3](./img/screenshot3.png)
-![Screenshot4](./img/screenshot4.png)
-![Screenshot5](./img/screenshot5.png)
-![Screenshot6](./img/screenshot6.png)
-![Screenshot7](./img/screenshot7.png)
+<p align="middle">
+  <img src="./img/screenshot1.png" />
+  <img src="./img/screenshot2.png" />
+</p>
+<p align="middle">
+  <img src="./img/screenshot3.png" />
+  <img src="./img/screenshot4.png" />
+</p>
+<p align="middle">
+  <img src="./img/screenshot5.png" />
+  <img src="./img/screenshot6.png" />
+</p>
+<p align="middle">
+  <img src="./img/screenshot7.png" />
+</p>+
 
 ## Technologies
 * Android 
