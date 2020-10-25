@@ -25,15 +25,15 @@ The goals of the practice were the following:
   <img src="./img/screenshot1.png" />
   <img src="./img/screenshot2.png" />
 </p>
-<p float="left">
+<p align="middle">
   <img src="./img/screenshot3.png" />
   <img src="./img/screenshot4.png" />
 </p>
-<p float="left">
+<p align="middle">
   <img src="./img/screenshot5.png" />
   <img src="./img/screenshot6.png" />
 </p>
-<p float="left">
+<p align="middle">
   <img src="./img/screenshot7.png" />
 </p>
 
