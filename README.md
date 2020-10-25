@@ -21,7 +21,7 @@ The goals of the practice were the following:
 * working with HTTP services
 
 ## Screenshots
-<p float="left">
+<p align="middle">
   <img src="./img/screenshot1.png" />
   <img src="./img/screenshot2.png" />
 </p>
