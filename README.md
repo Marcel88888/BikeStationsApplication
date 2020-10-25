@@ -21,8 +21,6 @@ The goals of the practice were the following:
 * working with HTTP services
 
 ## Screenshots
-<center>
-
 <p float="left">
   <img src="./img/screenshot1.png" />
   <img src="./img/screenshot2.png" />
@@ -38,8 +36,6 @@ The goals of the practice were the following:
 <p float="left">
   <img src="./img/screenshot7.png" />
 </p>
-
-</center>
 
 ## Technologies
 * Android 
