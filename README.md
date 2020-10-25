@@ -22,7 +22,7 @@ The goals of the practice were the following:
 
 ## Screenshots
 ![Screenshot1](./img/screenshot1.png) | ![Screenshot2](./img/screenshot2.png)
---- | ---
+------- | -------
 ![Screenshot3](./img/screenshot3.png) | ![Screenshot4](./img/screenshot4.png)
 ![Screenshot5](./img/screenshot5.png) | ![Screenshot6](./img/screenshot6.png)
 ![Screenshot7](./img/screenshot7.png) | 
